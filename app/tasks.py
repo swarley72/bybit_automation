@@ -15,4 +15,4 @@ def buy_common_crypto():
 @shared_task(name="buy_pepe")
 def buy_pepe():
     buy_crypto(currency=CurrencyEnum.PEPEUSDT, qty=1)
-    logger(f"PEPE order success")
+    logger(f"{CurrencyEnum.PEPEUSDT} order success")

@@ -25,7 +25,7 @@ def setup_loggers(logger, *args, **kwargs):
 celery_app.conf.beat_schedule = {
     "beat_buy_common_crypto": {
         "task": "buy_common_crypto",
-        "schedule": timedelta(hours=1),
+        "schedule": timedelta(hours=2),
     },
     "beat_buy_pepe": {
         "task": "buy_pepe",

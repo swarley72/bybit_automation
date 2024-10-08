@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class CurrencyEnum(Enum):
+class CurrencyEnum(str, Enum):
     BTCUSDT = "BTCUSDT"
     ETHUSDT = "ETHUSDT"
     SOLUSDT = "SOLUSDT"
