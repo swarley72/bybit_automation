@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A app.celery_main.celery_app worker --loglevel=warning
+    volumes:
+      - .:/app
+      - celery_worker_logs:/logs
+    environment:
+      - CELERY_BROKER_URL=pyamqp://guest@rabbitmq:5672
+      - BYBIT_API_KEY=BYBIT_API_KEY
+      - BYBIT_SECRET_KEY=BYBIT_SECRET_KEY
+    depends_on:
+      - rabbitmq
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A app.celery_main.celery_app beat --loglevel=warning
+    volumes:
+      - .:/app
+    environment:
+      - CELERY_BROKER_URL=pyamqp://guest@rabbitmq:5672
+      - BYBIT_API_KEY=BYBIT_API_KEY
+      - BYBIT_SECRET_KEY=BYBIT_SECRET_KEY
+    depends_on:
+      - rabbitmq
+      - celery_worker
+
+volumes:
+  rabbitmq_data:
+  celery_worker_logs:
