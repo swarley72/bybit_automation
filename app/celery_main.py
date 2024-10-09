@@ -29,6 +29,10 @@ celery_app.conf.beat_schedule = {
     },
     "beat_buy_pepe": {
         "task": "buy_pepe",
-        "schedule": timedelta(hours=4),
+        "schedule": timedelta(hours=5),
+    },
+    "beat_healthcheck": {
+        "task": "healthcheck",
+        "schedule": timedelta(seconds=30),
     },
 }

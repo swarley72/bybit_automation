@@ -16,3 +16,8 @@ def buy_common_crypto():
 def buy_pepe():
     buy_crypto(currency=CurrencyEnum.PEPEUSDT, qty=1)
     logger(f"{CurrencyEnum.PEPEUSDT} order success")
+
+
+@shared_task(name="healthcheck")
+def healthcheck():
+    print("Healthy")
